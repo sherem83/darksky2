@@ -17,7 +17,7 @@ public class DarkSkySD {
     public DarkSkySD() throws ParseException {
     }
 
-
+     /// add test
     @Given("^I am on Darksky home page$")
     public void siAmOnHomePage() {
         //Assert.assertEquals (SharedSD.getDriver ().getTitle (), "Dark Sky");
