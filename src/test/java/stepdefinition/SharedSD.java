@@ -58,7 +58,7 @@ public class SharedSD {
 	@After("@web")
 	public static void after() {
 		if (driver != null) {
-			driver.manage().deleteAllCookies();
+//			driver.manage().deleteAllCookies();
 			driver.quit();
 		}
 	}
