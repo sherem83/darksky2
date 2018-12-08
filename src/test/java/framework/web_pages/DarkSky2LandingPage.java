@@ -37,6 +37,8 @@ public class DarkSky2LandingPage extends framework.actions_web.BasePage {
     private By todayDate = By.xpath ("//td[@class='is-today']"); ///td[@class='is-today']
     private By verifyDate=By.xpath  ("//td[@data-day]");
 
+
+
     //comparing temp low and hig"
     //css selrctor
     private By low1 = By.cssSelector ("#week > a.day.revealed > span.tempRange > span.minTemp");
