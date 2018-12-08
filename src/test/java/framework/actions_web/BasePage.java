@@ -13,7 +13,10 @@ import stepdefinition.SharedSD;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -21,39 +24,43 @@ import java.util.concurrent.TimeUnit;
 
  */
 public class BasePage {
-	protected framework.actions_web.BasePage home;
-	protected Object driver;
+	//protected framework.actions_web.BasePage home;
+	//protected Object driver;
 	Actions a = new Actions (SharedSD.getDriver ( ));
 
-	public BasePage(Object driver) {
-	}
+//	public BasePage(Object driver) {
+//	}
 
-	public BasePage() {
-
-	}
+//	public BasePage() {
+//
+//	}
 
 	//This method allows the chrome driver to wait.
 	public static WebElement webAction(final By locator) {
-		Wait<WebDriver> wait = new FluentWait<WebDriver> (SharedSD.getDriver ( ))
-				.withTimeout (15, TimeUnit.SECONDS)
-				.pollingEvery (1, TimeUnit.SECONDS)
-				.ignoring (NoSuchElementException.class)
-				.ignoring (StaleElementReferenceException.class)
-				.withMessage ("Webdriver waited for 15 seconds but still could not find the element therefore Timeout Exception has been thrown");
-		WebElement element = wait.until (new Function<WebDriver, WebElement> ( ) {
-			public WebElement apply(WebDriver driver) {
-				return driver.findElement (locator);
-			}
-		});
-		return element;
+        Wait<WebDriver> wait = new FluentWait<WebDriver> (SharedSD.getDriver ( ))
+                .withTimeout (15, TimeUnit.SECONDS)
+                .pollingEvery (1, TimeUnit.SECONDS)
+                .ignoring (NoSuchElementException.class)
+                .ignoring (StaleElementReferenceException.class)
+                .withMessage ("Webdriver waited for 15 seconds but still could not find the element therefore Timeout Exception has been thrown");
+        WebElement element = wait.until (new Function<WebDriver, WebElement> ( ) {
+            public WebElement apply(WebDriver driver) {
+                return driver.findElement (locator);
+            }
+        });
+        return element;
+
+
+
+
 	}
 
 	//This method is to click on an element
 	public void clickOn(By locator) {
 		try {
-			webAction (locator).click ( );
+			webAction(locator).click();
 		} catch (NoSuchElementException e) {
-			Assert.fail ("Element is not found with this locator: " + locator.toString ( ));
+			Assert.fail ("Element is not found with this locator: " + locator.toString());
 			e.printStackTrace ( );
 		}
 	}
@@ -87,6 +94,13 @@ public class BasePage {
 			e.printStackTrace ( );
 		}
 		return text;
+	}
+
+	public static void scrollOnThePage() throws InterruptedException {
+		Thread.sleep(4000L);
+		JavascriptExecutor js = (JavascriptExecutor) SharedSD.getDriver();
+		js.executeScript("window.scrollBy(0,1050)", new Object[0]);
+		Thread.sleep(10000L);
 	}
 
 	// substring method if you need just digits when you dont need a text
@@ -144,9 +158,7 @@ public class BasePage {
 	}
 
 	//This method allows the chrome driver to wait.
-	public static void waitFor(int millisecond) throws InterruptedException {
-		Thread.sleep (millisecond);
-	}
+	public static void waitFor(int millisecond) throws InterruptedException { Thread.sleep (millisecond); }
 
 	//This method allows the compare a files
 	public void compareFiles(String filePath1, String filePath2) throws IOException {
@@ -179,6 +191,7 @@ public class BasePage {
 			e.printStackTrace ( );
 		}
 
+
 	}
 
 	public void TimeLineVerification() {
@@ -186,5 +199,17 @@ public class BasePage {
 
 	public WebElement getHours() {
 		return null;
-	}}
+	}
 
+	public String getDate(){
+        // impoting Java Util date class
+		Date date = new Date ();
+		// Java text calls  simple date format
+		SimpleDateFormat sdf =new SimpleDateFormat ("d");
+		String currentDate=sdf.format (date);
+		return currentDate;
+
+
+
+	}
+}
